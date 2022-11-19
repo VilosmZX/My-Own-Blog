@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+<div class="flex justify-center h-screen gap-5 flex-col items-center items-center p-5">
+    <div class="flex flex-col items-center font-raleway">
+        <img id="img-profile" class="rounded-full object-fill h-48 w-48" src="{{request.user.profile_pic.url}}" />
+        <span class="text-zinc-500 font-bold text-4xl mt-5">@{{request.user.username}}</span>
+    </div>
+    <div class="w-full shadow-2xl h-full p-5 rounded-lg bg-white flex flex-col gap-5">
+        <div class="flex justify-between w-full">
+            <span class="text-zinc-600 text-2xl">{{request.user.username}}'s Post</span>
+        </div>
+        <div class="grid grid-cols-2 auto-cols-max auto-row-max gap-2 lg:grid-cols-4">
+            {% if posts %}
+                {% for post in posts %}
+                    <a href="{% url 'post' post.id %}">
+                        <div class="bg-blue-300 gap-2 shadow-2xl h-[14rem] rounded-lg flex flex-col">
+                            <div class="flex items-center justify-between p-3">
+                                <span class="text-2xl font-bold text-white">{{post.title}}</span>
+                                <span class="text-white">{{post.category.name}}</span>
+                            </div>
+                            <div class="h-full">
+                                <img class="h-full w-full" src="{{post.image.url}}"/>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

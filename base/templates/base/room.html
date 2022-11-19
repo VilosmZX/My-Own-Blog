@@ -1,0 +1,77 @@
+{% extends 'main.html' %}
+
+{% block title %} {{post.title}} {% endblock title %}
+
+{% block content %}
+<div class="font-raleway grid grid-cols-1 lg:grid-cols-3 px-5 gap-5 py-5">
+    <div class="col-span-2 flex flex-col gap-5">
+        <div class="flex flex-col h-screen bg-white p-5 rounded-lg shadow-2xl">
+            <div class="w-full flex justify-between gap-5">
+                <span class="font-semibold text-4xl text-zinc-700">{{post.title}}</span>
+                <div class="flex gap-3 h-fit items-center">
+                    <a href="{% url 'category' post.category.name %}" class="duration-[0.3s] hover:-translate-y-2 font-semibold tex-white text-white rounded-full bg-blue-400 p-3">{{post.category}}</a>
+                    <a href="" class="duration-[0.3s] hover:opactiy-70 font-semibold text-zinc-500">{{post.author.username}}</a>
+                </div>
+            </div>
+            <hr class="w-full mt-3 border-4 mb-3"/>
+            <div class="overflow-y-auto">
+                <p class="font-raleway text-semibold text-xl">{{post.content}}</p>
+            </div>
+        </div>
+        <div class="flex flex-col gap-5 bg-white rounded-lg px-5 py-3">
+            <h1 class="text-zinc-500 text-4xl">Comment</h1>
+            <hr class="w-full mt-3 border-4 mb-3"/>
+            {% if request.user.is_authenticated %}
+                <div class="flex">
+                    <form id="comment_form" method="post" action="" class="w-full font-raleway flex gap-5 justify-between">
+                        {% csrf_token %}
+                        <input name="comment" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" type="text" placeholder="Submit"/>
+                        <button id="btn_comment" onclick="validate(event)" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="submit">Send</button>
+                    </form>
+                </div>
+            {% endif %}
+            <div class="flex flex-col gap-2 overflow-auto">
+                {% if comments %}
+                    {% for comment in comments %}
+                        <span class="flex gap-2 items-center text-zinc-700 text-xl"><a href="{% url 'profile' comment.author.username %}"><img class="object-fill h-10 w-10 rounded-full shadow-2xl" src="{{comment.author.profile_pic.url}}" /></a>{{comment.author.username}}: {{comment.comment}}</span>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-zinc-800 text-xl">No comment in this post</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-span-1">
+        <div class="h-fit flex flex-col bg-white p-5 rounded-lg shadow-2xl">
+            <div>
+                <span class="text-2xl text-zinc-600 font-semibold">Related Post</span>
+            </div>
+            <hr class="border-4 mb-3 mt-3"/>
+            <div class="flex flex-col p-3 gap-5">
+                {% if related_posts %}
+                    {% for related_post in related_posts %}
+                        <a href="{% url 'post' related_post.id %}">
+                            <div class="relative duration-[0.3s] border-l-4 border-opacity-0 border-blue-500 hover:translate-x-4 hover:border-opacity-100 p-2 bg-white h-[80px] bg-zinc-200 rounded-r-full shadow-lg">
+                                <div class="flex gap-5 z-0 f-full items-center">
+                                    <img src="{{related_post.image.url}}" class="duration-[0.3s] object-fill z-3 hover:z-5 h-[60px] w-20" />
+                                    <span class="text-white text-xl font-semibold text-zinc-700 overflow-hidden">{{related_post.title}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% else %}
+                    <span class="text-zinc-500 font-semibold">No Related Post</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btn_comment').click(function(e) {
+        e.preventDefault();
+        const form = document.getElementById('comment_form');
+        form.submit()
+    })
+</script>
+{% endblock content %}

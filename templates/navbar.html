@@ -1,0 +1,14 @@
+<div class="flex items-center sticky bg-blue-400 shadow-lg w-screen h-[60px] justify-between relative px-5 py-3">
+    <div class="font-raleway">
+        <h1 class="font=semibold text-3xl text-white duration-[0.3s] hover:px-5 hover:text-bold shadow-lg rounded-full hover:bg-white hover:text-blue-400"><a href="/">JBlog</a></h1>
+    </div>
+    <div class="font-raleway">
+        {% if request.user.is_authenticated %}
+            <span>Hello, <a href="{% url 'profile' %}">{{request.user.username}}</a></span>
+        {% else %}
+            <span class="text-lg text-blue-400 text-semibold hover:translate-y-[1px] cursor-pointer duration-[0.3s] rounded-full bg-white px-5 py-3"><a href="{% url 'login' %}">Login</a></span>
+        {% endif %}
+        <span class="text-lg text-blue-400 text-semibold hover:translate-y-[1px] cursor-pointer duration-[0.3s] rounded-full bg-white px-5 py-3"><a href="{% url 'new_post' %}">New Post</a></span>
+    </div>
+    
+</div>
