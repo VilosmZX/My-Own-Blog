@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'users.apps.UsersConfig',
     'django_extensions',
+    'post.apps.PostConfig'
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'

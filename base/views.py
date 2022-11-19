@@ -44,21 +44,6 @@ def post(request: HttpRequest, id: str) -> HttpResponse:
     }
     return render(request, 'base/room.html', context)
 
-@login_required(login_url='login')
-def new_post(request: HttpRequest) -> HttpResponse:
-    form = PostForm()
-
-    if request.method == 'POST':    
-        print(form.data)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('home')
-
-    context = {
-        'form': form 
-    }
-    return render(request, 'base/new_post.html', context)
-
 
 def login_page(request: HttpRequest) -> HttpResponse:
     
