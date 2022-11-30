@@ -22,3 +22,8 @@ def profile(request: HttpRequest, username: str) -> HttpResponse:
 def logout_user(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect('home')
+
+@login_required(login_url='login')
+def delete_account(request: HttpRequest) -> HttpResponse:
+    CustomUser.objects.get(username=request.user.username).delete()
+    return redirect('home')
