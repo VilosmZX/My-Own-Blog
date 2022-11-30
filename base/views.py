@@ -77,3 +77,40 @@ def logout_user(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect('home')
 
+def register_user(request: HttpRequest) -> HttpResponse:
+    if request.user.is_authenticated:
+        return redirect('home')
+    
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirmPassword')
+        profile_pic = request.FILES.get('profile_pic') 
+        
+        if password != confirm_password:
+            messages.add_message(request, messages.ERROR, 'Kofirmasi password tidak valid!')
+            return redirect('register')
+            
+        user_exists = User.objects.filter(Q(username=username) | Q(email=username)).exists()
+        
+        if user_exists:
+            messages.add_message(request, messages.ERROR, 'User dengan sudah terdaftar!')
+            
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+            profile_pic=profile_pic
+        )
+        
+        login(request, user)
+        return redirect('home')
+    
+    ctx = {}
+    return render(request, 'base/register.html', ctx)
+        
+        
+            
+    
+
