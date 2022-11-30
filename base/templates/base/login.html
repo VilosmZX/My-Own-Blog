@@ -15,7 +15,8 @@
         <input type="text" name="username" placeholder="Username">
         <label for="password">Password</label>
         <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
+        <button class="bg-white p-2 rounded" type="submit">Login</button>
     </form>
+    <a class="bg-blue-300 rounded-full p-3" href="{% url 'register' %}">Register new account</a>
 </div>
 {% endblock content %}
