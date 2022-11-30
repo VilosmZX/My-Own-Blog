@@ -97,6 +97,9 @@ def register_user(request: HttpRequest) -> HttpResponse:
         if user_exists:
             messages.add_message(request, messages.ERROR, 'User dengan sudah terdaftar!')
             
+        if profile_pic is None:
+            profile_pic = 'default/default.jpg'
+        
         user = User.objects.create_user(
             username=username,
             email=email,
