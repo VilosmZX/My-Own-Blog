@@ -4,7 +4,7 @@
     </div>
     <div class="font-raleway">
         {% if request.user.is_authenticated %}
-            <span>Hello, <a href="{% url 'profile' %}">{{request.user.username}}</a></span>
+            <span>Hello, <a href="{% url 'profile' request.user.username %}">{{request.user.username}}</a></span>
         {% else %}
             <span class="text-lg text-blue-400 text-semibold hover:translate-y-[1px] cursor-pointer duration-[0.3s] rounded-full bg-white px-5 py-3"><a href="{% url 'login' %}">Login</a></span>
         {% endif %}
