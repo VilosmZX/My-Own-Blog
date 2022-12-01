@@ -10,7 +10,7 @@
                 <span class="font-semibold text-4xl text-zinc-700">{{post.title}}</span>
                 <div class="flex gap-3 h-fit items-center">
                     <a href="{% url 'category' post.category.name %}" class="duration-[0.3s] hover:-translate-y-2 font-semibold tex-white text-white rounded-full bg-blue-400 p-3">{{post.category}}</a>
-                    <a href="" class="duration-[0.3s] hover:opactiy-70 font-semibold text-zinc-500">{{post.author.username}}</a>
+                    <a href="{% url 'profile' post.author.username %}" class="duration-[0.3s] hover:opactiy-70 font-semibold text-zinc-500">{{post.author.username}}</a>
                 </div>
             </div>
             <hr class="w-full mt-3 border-4 mb-3"/>

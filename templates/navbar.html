@@ -1,6 +1,7 @@
 <div class="flex items-center sticky bg-blue-400 shadow-lg w-screen h-[60px] justify-between relative px-5 py-3">
-    <div class="font-raleway">
+    <div class="font-raleway flex gap-4 items-center">
         <h1 class="font=semibold text-3xl text-white duration-[0.3s] hover:px-5 hover:text-bold shadow-lg rounded-full hover:bg-white hover:text-blue-400"><a href="/">JBlog</a></h1>
+        <h1 class="text-xl text-white"><a href="{% url 'search' %}">Search</a></h1>
     </div>
     <div class="font-raleway">
         {% if request.user.is_authenticated %}

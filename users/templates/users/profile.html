@@ -7,16 +7,20 @@
 <div class="flex justify-center h-screen gap-5 flex-col items-center items-center p-5">
     <div class="flex flex-col items-center font-raleway">
         <img id="img-profile" class="rounded-full object-fill h-48 w-48" src="{{request.user.profile_pic.url}}" />
-        <span class="text-zinc-500 font-bold text-4xl mt-5">@{{user.username}}</span>
+        <span class="text-zinc-500 font-bold text-4xl mt-5">@{{user.username}}{% if user.banned %}<sup class="text-red-500">Banned</sup>{%endif%}</span>
         <div class="flex gap-2">
             {% if request.user == user %}
                 <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'logout' %}">Logout</a></span>
                 <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'delete_account' %}">Delete Account</a></span>
             {% else %}
-                <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'logout' %}">Report</a></span>
+                <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="">Report</a></span>
             {% endif %}
             {% if request.user.is_staff or request.user.is_superuser %}
-                <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'logout' %}">Ban</a></span>
+                {% if user.banned %}
+                    <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'unban_user' user.username %}">Unban</a></span>
+                {% else %}
+                    <span class="border-b-2 border-red-400 border-opacity-0 hover:border-opacity-100 text-red-400 font-bold text-xl mt-2 cursor-pointer"><a href="{% url 'ban_user' user.username %}">Ban</a></span>
+                {% endif %}
             {% endif %}
         </div>
     </div>

@@ -29,6 +29,7 @@
 <body class="bg-blue-200">
     {% if request.user.is_authenticated and request.user.banned %}
       <p>Banned</p>
+      <a class="text-green-800 cursor-pointer hover:opacity-70" href="{% url 'logout' %}">Logout</a>
     {% else %}
       {% include 'navbar.html' %}
       {% block content %}

@@ -27,3 +27,25 @@ def logout_user(request: HttpRequest) -> HttpResponse:
 def delete_account(request: HttpRequest) -> HttpResponse:
     CustomUser.objects.get(username=request.user.username).delete()
     return redirect('home')
+
+def ban_user(request: HttpRequest, username) -> HttpResponse:
+    if not request.user.is_superuser or not request.user.is_staff:
+        return redirect('profile', username)
+    
+    user = CustomUser.objects.get(username=username)
+    user.banned = True 
+    user.save()
+    
+    return redirect('profile', username)
+    
+    
+def unban_user(request: HttpRequest, username) -> HttpResponse:
+    if not request.user.is_superuser or not request.user.is_staff:
+        return redirect('profile', username)
+    
+    user = CustomUser.objects.get(username=username)
+    user.banned = False 
+    user.save()
+    
+    return redirect('profile', username)
+    

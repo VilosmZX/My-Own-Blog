@@ -1,0 +1,43 @@
+{% extends 'main.html' %}
+
+{% block title %} Search {% endblock title %}
+
+{% block content %}
+
+<div class="flex gap-4 flex-col">
+    <form method="post">
+        {% csrf_token %}
+        <input required type="text" name="query" id="query" placeholder="Search Post or User">
+        <button type="submit">Search!</button>
+    </form>
+    {% if posts %}
+        <div class="flex flex-col gap-4">
+            <div>
+                Posts
+            </div>
+            <div class="flex gap-2">
+                {% for post in posts %}
+                    <div>
+                        {{post.title}}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    {% if users %}
+        <div class="flex flex-col gap-4">
+            <div>
+                Users
+            </div>
+            <div class="flex gap-2">
+                {% for user in users %}
+                    <div>
+                        {{user.username}}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock content %}
